@@ -1,0 +1,24 @@
+{
+  "name": "angular2-cblite",
+  "version": "0.0.1",
+  "authors": [
+    "Tom O'Reilly <tom@ussie.rocks>"
+  ],
+  "description": "An Angular2 wrapper for the Couchbase Lite REST API",
+  "main": "angular2-cblite.ts",
+  "keywords": [
+    "angular2",
+    "cblite"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/UssieApp/angular2-cblite",
+  "private": true,
+  "ignore": [
+    "**/.*"
+  ],
+  "dependencies": {
+    "angular2": "~2.0.0",
+    "rxjs": "~5.0.0"
+  },
+  "devDependencies": { }
+}
