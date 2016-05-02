@@ -16,6 +16,8 @@ export class Cblite {
   private _host: string;
 
   public db: string;
+  
+  public syncToken: string;
 
   // FIXME introduce checks for cblite and cordova
   // TODO do we still need to wait for deviceready?
@@ -34,8 +36,8 @@ export class Cblite {
 
     let parsed = url.match(/^(https?:\/\/)(?:([^@]+)@)?([^:\/]+)(:[0-9]+)?\/$/);
 
-    this._auth: (parsed[2] != '') ? 'Basic ' + window.btoa(parsed[2]) : '';
-    this._host:  parsed[1] + parsed[3] + (parsed[4] || '') + '/';
+    this._auth = (parsed[2] != '') ? 'Basic ' + window.btoa(parsed[2]) : '';
+    this._host =  parsed[1] + parsed[3] + (parsed[4] || '') + '/';
   }
 
   private _call(method: RequestMethod, segs: string[], options?: RequestOptionArgs) : Observable {
@@ -45,7 +47,7 @@ export class Cblite {
 
     console.log(segs);
 
-    return http.request(segs.join('/'), options)
+    return Http.request(segs.join('/'), options)
         .map(res =>  res.json().data);
   }
 
@@ -105,12 +107,12 @@ export class Cblite {
 
   // GET /{db}/_all_docs
   all(spec?: Map<string, string>) : Observable {
-    return this._call(RequestMethod.GET, [this.db, '_all_docs'], spec));
+    return this._call(RequestMethod.GET, [this.db, '_all_docs'], spec);
   }
 
   // POST /{db}/_all_docs
   many(records: Array<string>) : Observable {
-    return this._call(RequestMethod.POST, [this.db, '_all_docs'], null, records));
+    return this._call(RequestMethod.POST, [this.db, '_all_docs'], records);
   }
 
   // POST /{db}/_bulk_docs
@@ -132,25 +134,24 @@ export class Cblite {
   // POST /{db}/_temp_view
 
   // POST /{db}
-  createDocument(doc: Object, batch?: bool) : Observable {
+  createDocument(doc: Object, batch?: boolean) : Observable {
     let spec = {};
     return this._call(RequestMethod.POST, [this.db], spec);
   }
 
   // GET /{db}/{doc}
   retrieveDocument(id: string, spec: Map<string: string>) : Observable {
-    let spec = {};
     return this._call(RequestMethod.GET, [this.db, id], spec);
   }
 
   // PUT /{db}/{doc}
-  updateDocument(id: string, rev: string, doc: Object, batch?: bool) : Observable {
+  updateDocument(id: string, rev: string, doc: Object, batch?: boolean) : Observable {
     let spec = {};
     return this._call(RequestMethod.PUT, [this.db, id], spec);
   }
 
   // DELETE /{db}/{doc}
-  deleteDocument(id: string, rev: string, batch?: bool) : Observable {
+  deleteDocument(id: string, rev: string, batch?: boolean) : Observable {
     let spec = {};
     return this._call(RequestMethod.DELETE, [this.db, id], spec);
   }
